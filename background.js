@@ -1,14 +1,14 @@
-const REDIRECTS = [
+const DEFAULT_REDIRECTS = [
     { from: { hostname: "twitter.com" }, to: { hostname: "nitter.freedit.eu" } },
     { from: { hostname: "gist.github.com" }, to: { hostname: "gothub.dev.projectsegfau.lt", pathname: "gist{pathname}" } },
+    { from: { hostname: "github.com" }, to: { hostname: "gothub.dev.projectsegfau.lt" } },
 ];
 
-
-function format(s, args) {
-    for (const argName in args) {
-        s = s.replace(`{${argName}}`, args[argName])
-    }
-    return s;
+function format(fstring, args) {
+    return Object.keys(args).reduce(
+        (s, argName) => s.replace(`{${argName}}`, args[argName]),
+        fstring
+    );
 }
 
 
@@ -19,32 +19,33 @@ function urlMatches(url, rules) {
 }
 
 function convertUrl(url, parts) {
-    for (const part in parts) {
-        url[part] = format(parts[part], url);
-    }
-    return url
+    Object.keys(parts).forEach((part) => url[part] = format(parts[part], url));
+    return url;
 }
 
 
-async function logURL(request) {
+async function handleRequest(request) {
     let url = new URL(request.url);
-    console.log({ url });
+    const res = await browser.storage.sync.get('redirects');
+    if (!res.hasOwnProperty("redirects")) return;
 
-    for (const { from, to } of REDIRECTS) {
-        console.log({ from, to })
-        const matches = urlMatches(url, from);
-        console.log({ matches });
+    const redirection = res.redirects.find(({ from }) => urlMatches(url, from));
+    if (redirection === undefined) return;
 
-        if (matches) {
-            return {
-                redirectUrl: convertUrl(url, to).toString(),
-            }
-        }
-    }
+    return {
+        redirectUrl: convertUrl(url, redirection.to).toString(),
+    };
 }
+
+
+browser.runtime.onInstalled.addListener(function(details) {
+    if (details.reason === "install") {
+        browser.storage.sync.set({ redirects: DEFAULT_REDIRECTS });
+    }
+});
 
 browser.webRequest.onBeforeRequest.addListener(
-    logURL,
-    { urls: ["<all_urls>"], types: ["main_frame"] },
+    handleRequest,
+    { types: ["main_frame"], urls: ["<all_urls>"] },
     ["blocking"]
 );
