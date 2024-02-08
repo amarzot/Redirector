@@ -6,7 +6,6 @@
     </head>
     <body>
         <h1>Redirector</h1>
-        <h2>Add/Edit Redirection</h2>
         <form>
             <div class="mappings">
                 Hostname
@@ -23,13 +22,17 @@
                 <input type="text" id="to-pathname">
                 </div>
             </details>
-            <button type="submit">Save</button>
+            <h1></h1>
+            <div class="button-container">
+                <button id="save" type="button">Save</button>
+                <button id="overwrite" type="button">Overwrite Selected</button>
+                <button id="delete" type="button">Delete Selected</button>
+                <button id="load" type="button">Load Selected</button>
+                <button type="reset">Reset</button>
+            </div>
         </form>
-        <h2>Existing Redirections</h2>
-        <div class="existing">
-            <select multiple id="redirection-list"></select>
-            <button id="delete">Delete Selected</button>
-        </div>
+        <h1></h1>
+        <select multiple id="redirection-list"></select>
         <script src="options.js"></script>
     </body>
 </html>
