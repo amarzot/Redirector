@@ -1,3 +1,5 @@
+@font-face {font-family: 'APL386';src: url('APL386.ttf');}
+
 body {
     display: flex;
     flex-direction: column;
@@ -5,10 +7,25 @@ body {
     text-align: center;
     max-width: 600px;
 }
+body * {
+    font-family: APL386;
+}
+
+
+#title {
+    display: flex;
+    justify-content: center;
+}
+
+#title > img {
+    width: 3em;
+}
+
 
 .mappings {
     display: grid;
     grid-template-columns: min-content 1fr min-content 1fr;
+    gap: 0.5em;
 }
 
 .mappings>*:nth-child(odd) {
@@ -29,6 +46,7 @@ button {
 select {
     width: 100%;
     height: 20em;
+    text-align: center;
 }
  
 .button-container {
