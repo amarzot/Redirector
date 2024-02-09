@@ -100,12 +100,15 @@ async function loadSelected() {
     const { from, to } = redirects[loadIndex];
     const form = document.querySelector("form");
     form.reset();
+
     Object.keys(from).forEach(function(name) {
         form.querySelector(`#from-${name}`).value = from[name];
     });
     Object.keys(to).forEach(function(name) {
         form.querySelector(`#to-${name}`).value = to[name];
     });
+
+    document.querySelector("details").setAttribute("open", "");
 }
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -116,7 +119,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const deleteButton = document.querySelector("button#delete")
 
     const select = document.querySelector("select");
-    console.log("select", select.selectedIndex);
 
     saveButton.addEventListener("click", saveRedirect);
     overwriteButton.addEventListener("click", overwriteSelected);
