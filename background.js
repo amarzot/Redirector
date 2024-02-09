@@ -49,3 +49,5 @@ browser.webRequest.onBeforeRequest.addListener(
     { types: ["main_frame"], urls: ["<all_urls>"] },
     ["blocking"]
 );
+
+browser.browserAction.onClicked.addListener(() => browser.runtime.openOptionsPage());
