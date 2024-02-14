@@ -50,4 +50,4 @@ browser.webRequest.onBeforeRequest.addListener(
     ["blocking"]
 );
 
-browser.browserAction.onClicked.addListener(() => browser.runtime.openOptionsPage());
+browser.action.onClicked.addListener(() => browser.runtime.openOptionsPage());
