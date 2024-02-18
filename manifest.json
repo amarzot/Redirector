@@ -4,6 +4,7 @@
     "version": "1.0",
 
     "description": "Redirect web requests using custom rules",
+    "homepage_url": "https://github.com/amarzot/Redirector",
 
     "permissions": ["storage", "webRequest", "webRequestBlocking", "<all_urls>"],
 
