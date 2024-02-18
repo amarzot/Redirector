@@ -3,7 +3,7 @@
     "name": "Redirector",
     "version": "1.0",
 
-    "description": "Manage redirection rules for websites",
+    "description": "Redirect web requests using custom rules",
 
     "permissions": ["storage", "webRequest", "webRequestBlocking", "<all_urls>"],
 
